@@ -1,0 +1,84 @@
+.blockCounters {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blockCounter2, .blockSettings {
+    width: 350px;
+    height: 280px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.counter2, .settings {
+    width: 300px;
+    height: 200px;
+    border: 1px solid black;
+    background-color: pink;
+    border-radius: 5px;
+}
+
+.counter, .textBlock2, .textError2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.counter {
+    font-size: 60px;
+}
+
+.counterActive {
+    color: red;
+    box-shadow: 5px 5px 5px 5px #3C93D5;
+}
+
+.textBlock2 {
+    font-size: 20px;
+}
+
+.blockBtn {
+    width: 300px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/*.counterBtn {*/
+/*    width: 80px;*/
+/*    height: 30px;*/
+/*    border-radius: 5px;*/
+/*    background-color: burlywood;*/
+/*}*/
+
+/*.counterBtn:hover {*/
+/*    background-color: #e0c6a5;*/
+/*}*/
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/*.labelInput {*/
+/*    font-size: 25px;*/
+/*}*/
+
+/*.errorInput {*/
+/*    border: 2px solid red;*/
+/*    background-color: gold;*/
+/*}*/

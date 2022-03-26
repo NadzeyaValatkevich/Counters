@@ -1,5 +1,4 @@
 import React, {ChangeEvent} from 'react';
-import s from "./Counter.module.css";
 
 type InputPropsType = {
     id: string,
@@ -7,7 +6,7 @@ type InputPropsType = {
     value: number
     error: string | null
     className: string
-}
+};
 
 export function Input(props: InputPropsType) {
 
@@ -20,4 +19,4 @@ export function Input(props: InputPropsType) {
                 className={props.className}
                 key={props.id} value={props.value} type={'number'} onChange={onChangeHandler}/>
     )
-}
+};

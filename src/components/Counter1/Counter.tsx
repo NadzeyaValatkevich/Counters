@@ -27,7 +27,7 @@ export function Counter(props: CounterPropsType) {
                     (!props.disabledSet) ?
                         <div className={s.textBlock}>"Enter values and press 'set'"</div> :
                         <div className={`${props.count === props.maxValue ? s.counterActive : s.counter} ${s.counter}`}>{props.count}</div>}
-                {/*<div>{props.count}</div>}*/}
+
             </div>
             <div className={s.blockBtn}>
                 <Button title={'INCR'}
