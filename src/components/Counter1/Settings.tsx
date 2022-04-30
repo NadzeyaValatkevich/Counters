@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {Button} from "./Button";
 import {Input} from "./Input";
 import s from './Counter1.module.css';
+import {setMaxValueAC, setStartValueAC} from "../../redux/BLL1/counterReducer";
+import {useDispatch} from "react-redux";
 
 type SettingsPropsType = {
     callback: () => void
-    setStartValue: (value: number) => void
-    setMaxValue: (value: number) => void
+    // setStartValue: (value: number) => void
+    // setMaxValue: (value: number) => void
     startValue: number
     maxValue: number
     setError1: (errorTitle: string | null) => void
@@ -14,9 +16,11 @@ type SettingsPropsType = {
     error1: string | null
     error2: string | null
     disabledSet: boolean
-    setDisabledSet: (value: boolean) => void
-    setDisabledIncr: (value: boolean) => void
-    setDisabledReset: (value: boolean) => void
+    // setDisabledSet: (value: boolean) => void
+    // setDisabledIncr: (value: boolean) => void
+    // setDisabledReset: (value: boolean) => void
+    onChangeInputMaxValue: (value: number) => void
+    onChangeInputStartValue: (value: number) => void
 };
 
 export const Settings = (props: SettingsPropsType) => {
@@ -25,19 +29,21 @@ export const Settings = (props: SettingsPropsType) => {
         props.callback()
     };
 
-    const onChangeInputMaxValue = (value: number) => {
-        props.setMaxValue(value);
-        props.setDisabledSet(false);
-        props.setDisabledIncr(true);
-        props.setDisabledReset(true);
-    };
+    // const onChangeInputMaxValue = (value: number) => {
+    //     dispatch(setMaxValueAC(value))
+    //     // props.setMaxValue(value);
+    //     props.setDisabledSet(false);
+    //     props.setDisabledIncr(true);
+    //     props.setDisabledReset(true);
+    // };
 
-    const onChangeInputStartValue = (value: number) => {
-        props.setStartValue(value);
-        props.setDisabledSet(false);
-        props.setDisabledIncr(true);
-        props.setDisabledReset(true);
-    };
+    // const onChangeInputStartValue = (value: number) => {
+    //     dispatch(setStartValueAC(value))
+    //     // props.setStartValue(value);
+    //     props.setDisabledSet(false);
+    //     props.setDisabledIncr(true);
+    //     props.setDisabledReset(true);
+    // };
 
     if (props.maxValue < 0) {
         props.setError1('Incorrect value')
@@ -64,7 +70,7 @@ export const Settings = (props: SettingsPropsType) => {
                     <Input
                         className={props.error1 ? s.errorInput : ''}
                         id={'maxValue'}
-                        callback={onChangeInputMaxValue}
+                        callback={props.onChangeInputMaxValue}
                         value={props.maxValue}
                         error={props.error1}
                     />
@@ -74,7 +80,7 @@ export const Settings = (props: SettingsPropsType) => {
                     <Input
                         className={props.error2 ? s.errorInput : ''}
                         id={'startValue'}
-                        callback={onChangeInputStartValue}
+                        callback={props.onChangeInputStartValue}
                         value={props.startValue}
                         error={props.error2}
                     />

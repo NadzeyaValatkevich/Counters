@@ -1,64 +1,61 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Counter} from "./Counter";
 import {Settings} from "./Settings";
 import s from './Counter1.module.css'
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../redux/BLL1/store";
+import {incCountAC, resetCountAC, setMaxValueAC, setStartValueAC} from "../../redux/BLL1/counterReducer";
+import {setCountFromLSAC} from "../../redux/BLL2/counterReducer2";
 
 const Counter1 = () => {
-    const startCount = 0;
 
-    const [count, setCount] = useState(startCount)
-    const [maxValue, setMaxValue] = useState(5);
-    const [startValue, setStartValue] = useState(0);
+    const count = useSelector<AppStateType, number>(state => state.counter.count)
+    const maxValue = useSelector<AppStateType, number>(state => state.counter.maxValue)
+    const startValue = useSelector<AppStateType, number>(state => state.counter.startValue)
+    const dispatch = useDispatch();
+
+    const addCount = () => {
+        if (count < maxValue) {  // кнопка должна быть тупой, она не должна контролировать
+                    dispatch(incCountAC());
+                }
+        };
+
+    const countReset = () => {
+        dispatch(resetCountAC())
+        };
+
     const [error1, setError1] = useState<string | null>(null);
     const [error2, setError2] = useState<string | null>(null);
     const [disabledSet, setDisabledSet] = useState<boolean>(true);
     const [disabledIncr, setDisabledIncr] = useState<boolean>(false);
     const [disabledReset, setDisabledReset] = useState<boolean>(false);
 
-    useEffect(() => {
-        localStorage.setItem('count', JSON.stringify(count));
-    }, [count]);
-
-    const addCount = () => {
-        if (count < maxValue) {  // кнопка должна быть тупой, она не должна контролировать
-            setCount(count + 1);
-        }
-    };
-
-    const countReset = () => {
-        setCount(startCount)
-    };
-
     const setLocalStorage = () => {
-        localStorage.setItem('startValue', JSON.stringify(startValue));
-        localStorage.setItem('maxValue', JSON.stringify(maxValue));
-        setCount(startValue);
+        dispatch(setCountFromLSAC(startValue))
         setDisabledSet(true);
         setDisabledIncr(false);
         setDisabledReset(false);
     };
 
-    useEffect(() => {
-        let newStartValue = localStorage.getItem('startValue')
-        if (newStartValue) {
-            setStartValue(JSON.parse(newStartValue))
-            setCount(JSON.parse(newStartValue))
-        }
-    }, []);
+    const onChangeInputMaxValue = (value: number) => {
+        dispatch(setMaxValueAC(value))
+        setDisabledSet(false);
+        setDisabledIncr(true);
+        setDisabledReset(true);
+    };
 
-    useEffect(() => {
-        let newMaxValue = localStorage.getItem('maxValue')
-        if (newMaxValue) {
-            setMaxValue(JSON.parse(newMaxValue))
-        }
-    }, []);
+    const onChangeInputStartValue = (value: number) => {
+        dispatch(setStartValueAC(value))
+        // props.setStartValue(value);
+        setDisabledSet(false);
+        setDisabledIncr(true);
+        setDisabledReset(true);
+    };
 
     return (
         <div className={s.blockCounters}>
             <Settings
                 callback={setLocalStorage}
-                setStartValue={setStartValue}
-                setMaxValue={setMaxValue}
                 startValue={startValue}
                 maxValue={maxValue}
                 setError1={setError1}
@@ -66,9 +63,11 @@ const Counter1 = () => {
                 error1={error1}
                 error2={error2}
                 disabledSet={disabledSet}
-                setDisabledSet={setDisabledSet}
-                setDisabledIncr={setDisabledIncr}
-                setDisabledReset={setDisabledReset}
+                // setDisabledSet={setDisabledSet}
+                // setDisabledIncr={setDisabledIncr}
+                // setDisabledReset={setDisabledReset}
+                onChangeInputMaxValue={onChangeInputMaxValue}
+                onChangeInputStartValue={onChangeInputStartValue}
             />
             <Counter count={count}
                      maxValue={maxValue}

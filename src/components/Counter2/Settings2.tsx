@@ -5,8 +5,6 @@ import s from './Counter2.module.css';
 
 type SettingsPropsType = {
     callback: () => void
-    setStartValue: (value: number) => void
-    setMaxValue: (value: number) => void
     startValue: number
     maxValue: number
     setError1: (errorTitle: string | null) => void
@@ -15,8 +13,8 @@ type SettingsPropsType = {
     error2: string | null
     disabledSet2: boolean
     setDisabledSet2: (value: boolean) => void
-    setDisabledIncr: (value: boolean) => void
-    setDisabledReset: (value: boolean) => void
+    onChangeInputMaxValue: (value: number) => void
+    onChangeInputStartValue: (value: number) => void
 };
 
 export const Settings = (props: SettingsPropsType) => {
@@ -25,42 +23,25 @@ export const Settings = (props: SettingsPropsType) => {
         props.callback()
     };
 
-    const onChangeInputMaxValue = (value: number) => {
-        props.setMaxValue(value);
-        props.setDisabledSet2(false);
-        // props.setDisabledIncr(true);
-        // props.setDisabledReset(true);
-    };
-
-    const onChangeInputStartValue = (value: number) => {
-        props.setStartValue(value);
-        props.setDisabledSet2(false);
-        // props.setDisabledIncr(true);
-        // props.setDisabledReset(true);
-    };
-
     if (props.maxValue < 0) {
         props.setError1('Incorrect value')
         props.setDisabledSet2(true);
     } else {
         props.setError1(null)
-    }
-    ;
+    };
 
     if (props.startValue < 0) {
         props.setError2('Incorrect value')
         props.setDisabledSet2(true);
     } else {
         props.setError2(null)
-    }
-    ;
+    };
 
     if (props.maxValue === props.startValue) {
         props.setError1('Incorrect value')
         props.setError2('Incorrect value')
         props.setDisabledSet2(true);
-    }
-    ;
+    };
 
     return (
         <div className={s.blockSettings}>
@@ -68,7 +49,7 @@ export const Settings = (props: SettingsPropsType) => {
                 <div>
                     <Input2
                         id={'maxValue'}
-                        callback={onChangeInputMaxValue}
+                        callback={props.onChangeInputMaxValue}
                         value={props.maxValue}
                         error={props.error1}
                         label={'maxValue'}
@@ -77,7 +58,7 @@ export const Settings = (props: SettingsPropsType) => {
                 <div>
                     <Input2
                         id={'startValue'}
-                        callback={onChangeInputStartValue}
+                        callback={props.onChangeInputStartValue}
                         value={props.startValue}
                         error={props.error2}
                         label={'startValue'}

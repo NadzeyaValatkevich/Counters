@@ -2,14 +2,24 @@ import React, {useEffect, useState} from 'react';
 import s from "./Counter2.module.css";
 import {Button2} from "./Button2";
 import {Settings} from "./Settings2";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../redux/BLL1/store";
+
+import {
+    incCountAC,
+    resetCountAC,
+    setCountFromLSAC,
+    setMaxValueAC,
+    setStartValueAC
+} from "../../redux/BLL2/counterReducer2";
 
 const Counter2 = () => {
 
-    const startCount = 0;
+    const count = useSelector<AppStateType, number>(state => state.counter2.count)
+    const maxValue = useSelector<AppStateType, number>(state => state.counter2.maxValue)
+    const startValue = useSelector<AppStateType, number>(state => state.counter2.startValue)
+    const dispatch = useDispatch();
 
-    const [count, setCount] = useState(startCount)
-    const [maxValue, setMaxValue] = useState(5);
-    const [startValue, setStartValue] = useState(0);
     const [error1, setError1] = useState<string | null>(null);
     const [error2, setError2] = useState<string | null>(null);
     const [disabledSet1, setDisabledSet1] = useState<boolean>(false);
@@ -17,46 +27,34 @@ const Counter2 = () => {
     const [disabledIncr, setDisabledIncr] = useState<boolean>(false);
     const [disabledReset, setDisabledReset] = useState<boolean>(false);
 
-    useEffect(() => {
-        localStorage.setItem('count', JSON.stringify(count));
-    }, [count]);
-
     const addCount = () => {
         if (count < maxValue) {
-            setCount(count + 1);
+            dispatch(incCountAC());
         }
     };
 
     const countReset = () => {
-        setCount(startCount)
+        dispatch(resetCountAC())
     };
 
     const setLocalStorage = () => {
-        localStorage.setItem('startValue', JSON.stringify(startValue));
-        localStorage.setItem('maxValue', JSON.stringify(maxValue));
-        setCount(startValue);
+        dispatch(setCountFromLSAC(startValue))
         setDisabledSet1(false);
     };
 
-    useEffect(() => {
-        let newStartValue = localStorage.getItem('startValue')
-        if (newStartValue) {
-            setStartValue(JSON.parse(newStartValue))
-            setCount(JSON.parse(newStartValue))
-        }
-    }, []);
-
-    useEffect(() => {
-        let newMaxValue = localStorage.getItem('maxValue')
-        if (newMaxValue) {
-            setMaxValue(JSON.parse(newMaxValue))
-        }
-    }, []);
-
     const showSettings = () => {
         setDisabledSet1(true);
-    }
+    };
 
+    const onChangeInputMaxValue = (value: number) => {
+        dispatch(setMaxValueAC(value))
+        setDisabledSet2(false);
+    };
+
+    const onChangeInputStartValue = (value: number) => {
+        dispatch(setStartValueAC(value))
+        setDisabledSet2(false);
+    };
     return (
         <div className={s.blockCounters}>
             {(!disabledSet1) ?
@@ -86,8 +84,8 @@ const Counter2 = () => {
                 :
                 <Settings
                     callback={setLocalStorage}
-                    setStartValue={setStartValue}
-                    setMaxValue={setMaxValue}
+                    onChangeInputMaxValue={onChangeInputMaxValue}
+                    onChangeInputStartValue={onChangeInputStartValue}
                     startValue={startValue}
                     maxValue={maxValue}
                     setError1={setError1}
@@ -96,8 +94,7 @@ const Counter2 = () => {
                     error2={error2}
                     disabledSet2={disabledSet2}
                     setDisabledSet2={setDisabledSet2}
-                    setDisabledIncr={setDisabledIncr}
-                    setDisabledReset={setDisabledReset}/>
+                    />
             }
         </div>
     );
