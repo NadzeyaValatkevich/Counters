@@ -17,6 +17,7 @@ type CounterPropsType = {
 };
 
 export function Counter(props: CounterPropsType) {
+
     if (props.count === props.maxValue) {
     }
     return (

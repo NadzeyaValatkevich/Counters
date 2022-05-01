@@ -37,7 +37,7 @@ export const Settings = (props: SettingsPropsType) => {
         props.setError2(null)
     };
 
-    if (props.maxValue === props.startValue) {
+    if (props.maxValue === props.startValue || props.maxValue < props.startValue) {
         props.setError1('Incorrect value')
         props.setError2('Incorrect value')
         props.setDisabledSet2(true);

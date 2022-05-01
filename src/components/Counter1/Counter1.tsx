@@ -5,7 +5,7 @@ import s from './Counter1.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/BLL1/store";
 import {incCountAC, resetCountAC, setMaxValueAC, setStartValueAC} from "../../redux/BLL1/counterReducer";
-import {setCountFromLSAC} from "../../redux/BLL2/counterReducer2";
+import {setCountFromLSAC} from "../../redux/BLL1/counterReducer";
 
 const Counter1 = () => {
 
@@ -46,7 +46,6 @@ const Counter1 = () => {
 
     const onChangeInputStartValue = (value: number) => {
         dispatch(setStartValueAC(value))
-        // props.setStartValue(value);
         setDisabledSet(false);
         setDisabledIncr(true);
         setDisabledReset(true);
@@ -63,9 +62,7 @@ const Counter1 = () => {
                 error1={error1}
                 error2={error2}
                 disabledSet={disabledSet}
-                // setDisabledSet={setDisabledSet}
-                // setDisabledIncr={setDisabledIncr}
-                // setDisabledReset={setDisabledReset}
+                setDisabledSet={setDisabledSet}
                 onChangeInputMaxValue={onChangeInputMaxValue}
                 onChangeInputStartValue={onChangeInputStartValue}
             />

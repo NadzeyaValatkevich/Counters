@@ -24,8 +24,6 @@ const Counter2 = () => {
     const [error2, setError2] = useState<string | null>(null);
     const [disabledSet1, setDisabledSet1] = useState<boolean>(false);
     const [disabledSet2, setDisabledSet2] = useState<boolean>(false);
-    const [disabledIncr, setDisabledIncr] = useState<boolean>(false);
-    const [disabledReset, setDisabledReset] = useState<boolean>(false);
 
     const addCount = () => {
         if (count < maxValue) {
@@ -43,6 +41,7 @@ const Counter2 = () => {
     };
 
     const showSettings = () => {
+        console.log('bad setState')
         setDisabledSet1(true);
     };
 
@@ -55,6 +54,7 @@ const Counter2 = () => {
         dispatch(setStartValueAC(value))
         setDisabledSet2(false);
     };
+
     return (
         <div className={s.blockCounters}>
             {(!disabledSet1) ?
@@ -67,12 +67,13 @@ const Counter2 = () => {
                         <Button2 title={'INCR'}
                                  callback={addCount}
                                  count={count}
-                                 disabled={disabledIncr || count === maxValue}
+                                 disabled={false || count === maxValue}
                         />
+
                         <Button2 title={'RESET'}
                                  callback={countReset}
                                  count={count}
-                                 disabled={disabledReset}
+                                 disabled={false}
                         />
                         <Button2 title={'SET'}
                                  callback={showSettings}

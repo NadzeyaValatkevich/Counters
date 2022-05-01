@@ -41,7 +41,7 @@ export const counterReducer = (state:InitialStateType = loadState() || initialSt
     }
 };
 
-export const incCountAC = () => {return {type: "INC-COUNT"} as const};
+export const incCountAC = () => ({type: "INC-COUNT"} as const);
 export const setCountFromLSAC = (count:number) => {return {type: "SET-COUNT-FROM-LOCAL-STORAGE", startValue:count} as const};
 export const resetCountAC = () => {return {type: "RESET-COUNT"} as const};
 export const setMaxValueAC = (value: number) => {return {type: "SET-MAX-VALUE", maxValue: value} as const};
